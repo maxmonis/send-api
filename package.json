@@ -3,11 +3,20 @@
   "version": "1.0.0",
   "description": "Clone of Firefox Send",
   "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./index.js",
+    "start": "node ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "repository": "https://github.com/maxmonis/sendClone",
   "author": "Max Monis <mmonis77@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1"
+    "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.6.1",
+    "mongoose": "^5.10.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
