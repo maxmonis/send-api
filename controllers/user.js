@@ -1,14 +1,21 @@
 const User = require('../models/User');
+const bcrypt = require('bcrypt');
 
 exports.newUser = async (req, res) => {
-  const { email } = req.body;
+  const { name, email, password } = req.body;
   let user = await User.findOne({ email });
   if (user) {
     return res
       .status(400)
-      .json({ msg: 'Duplicate user, email must be unique' });
+      .json({ msg: 'Email must be unique' });
   }
   user = new User(req.body);
-  user.save();
-  res.json({ msg: 'User added' });
+  const salt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(password, salt);
+  try {
+    user.save();
+    res.json({ msg: `${name} added to users` });
+  } catch (error) {
+    console.log(error);
+  }
 };
