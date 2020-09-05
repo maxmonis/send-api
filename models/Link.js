@@ -11,7 +11,7 @@ const linkSchema = new Schema({
     ref: 'User',
     default: null,
   },
-  password: { type: String },
+  password: { type: String, default: null },
   created: {
     type: Date,
     default: Date.now(),
