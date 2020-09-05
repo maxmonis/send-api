@@ -1,8 +1,13 @@
 const Link = require('../models/Link');
 const shortid = require('shortid');
 const bcrypt = require('bcrypt');
+const { validationResult } = require('express-validator');
 
 exports.newLink = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   const { original_name, password, downloads } = req.body;
   const link = new Link();
   link.url = shortid.generate();
