@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { addFile, removeFile } = require('../controllers/fileController');
-const multer = require('multer');
-const upload = multer({ dest: './uploads' });
+const auth = require('../middleware/auth');
 
-router.post('/', upload.single('file'), addFile);
+router.post('/', auth, addFile);
 
 router.delete('/:id', removeFile);
 
