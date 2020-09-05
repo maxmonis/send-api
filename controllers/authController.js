@@ -1,9 +1,14 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { validationResult } = require('express-validator');
 require('dotenv').config({ path: 'variables.env' });
 
 exports.userAuthentication = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
@@ -29,4 +34,6 @@ exports.userAuthentication = async (req, res, next) => {
   }
 };
 
-exports.authenticatedUser = (req, res) => {};
+exports.authenticatedUser = (req, res) => {
+  res.json({ user: req.user });
+};
