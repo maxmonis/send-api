@@ -31,3 +31,13 @@ exports.newLink = async (req, res) => {
     console.log(error);
   }
 };
+
+exports.getLink = async (req, res, next) => {
+  const { url } = req.params;
+  const link = await Link.findOne({ url });
+  if (!link) {
+    res.status(400).json({ msg: 'Link not found' });
+    return next();
+  }
+  res.json({ file: link.name });
+};

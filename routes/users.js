@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const user = require('../controllers/userController');
+const { newUser } = require('../controllers/userController');
 const { check } = require('express-validator');
 
 router.post(
@@ -12,7 +12,7 @@ router.post(
       min: 6,
     }),
   ],
-  user.newUser
+  newUser
 );
 
 module.exports = router;
