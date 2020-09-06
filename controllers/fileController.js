@@ -1,5 +1,6 @@
 const multer = require('multer');
 const shortid = require('shortid');
+const { unlinkSync } = require('fs');
 
 exports.addFile = async (req, res, next) => {
   const gig = 1024 * 1024;
@@ -21,7 +22,6 @@ exports.addFile = async (req, res, next) => {
   };
   const upload = multer(config).single('file');
   upload(req, res, async (error) => {
-    console.log(req.file);
     if (!error) {
       res.json({ file: req.file.filename });
     } else {
@@ -31,4 +31,10 @@ exports.addFile = async (req, res, next) => {
   });
 };
 
-exports.removeFile = async (req, res) => {};
+exports.removeFile = async (req, res) => {
+  try {
+    unlinkSync(__dirname + `/../uploads/${req.file}`);
+  } catch (error) {
+    console.log(error);
+  }
+};

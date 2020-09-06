@@ -39,5 +39,14 @@ exports.getLink = async (req, res, next) => {
     res.status(400).json({ msg: 'Link not found' });
     return next();
   }
-  res.json({ file: link.name });
+  const { name, downloads } = link;
+  res.json({ file: name });
+  if (downloads === 1) {
+    req.file = name;
+    await Link.findOneAndRemove(req.params.url);
+    next();
+  } else {
+    link.downloads--;
+    await link.save();
+  }
 };
