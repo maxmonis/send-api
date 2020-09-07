@@ -1,5 +1,5 @@
 const Link = require('../models/Link');
-const shortid = require('shortid');
+const { generate } = require('shortid');
 const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
 
@@ -8,10 +8,10 @@ exports.newLink = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const { original_name, password, downloads } = req.body;
+  const { original_name, password, downloads, name } = req.body;
   const link = new Link();
-  link.url = shortid.generate();
-  link.name = shortid.generate();
+  link.url = generate();
+  link.name = name;
   link.original_name = original_name;
   link.password = password;
   if (req.user) {
@@ -27,6 +27,15 @@ exports.newLink = async (req, res) => {
   try {
     await link.save();
     res.json({ msg: `${link.url}` });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.allLinks = async (req, res) => {
+  try {
+    const links = await Link.find({}).select('url -_id');
+    res.json(links);
   } catch (error) {
     console.log(error);
   }
