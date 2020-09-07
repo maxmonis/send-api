@@ -16,6 +16,8 @@ const AuthReducer = (state, action) => {
         authenticated: true,
       };
     }
+    case 'USER_LOADED':
+      return { ...state, user: payload };
     case 'CLEAR_ALERTS':
       return {
         ...state,

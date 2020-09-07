@@ -2,6 +2,7 @@ import React, { useReducer } from 'react';
 import authContext from './authContext';
 import authReducer from './authReducer';
 import client from '../../config/axios';
+import Token from '../../config/token';
 
 const AuthState = ({ children }) => {
   const initialState = {
@@ -33,6 +34,18 @@ const AuthState = ({ children }) => {
       dispatch({ type: 'CLEAR_ALERTS' });
     }, 3000);
   };
+  const loadUser = async () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      Token(token);
+    }
+    try {
+      const { data } = await client.get('api/auth');
+      dispatch({ type: 'USER_LOADED', payload: data.user });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const { token, authenticated, user, message } = state;
   return (
     <authContext.Provider
@@ -43,6 +56,7 @@ const AuthState = ({ children }) => {
         message,
         registerUser,
         logUserIn,
+        loadUser,
       }}
     >
       {children}
