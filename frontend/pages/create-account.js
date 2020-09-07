@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Layout from '../components/Layout';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import authContext from '../context/auth/authContext';
+import Alert from '../components/Alert';
 
 const CreateAccount = () => {
+  const { registerUser, message } = useContext(authContext);
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -20,7 +23,7 @@ const CreateAccount = () => {
         .min(6, 'Minimum length of password is 6'),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      registerUser(values);
     },
   });
   const {
@@ -38,6 +41,7 @@ const CreateAccount = () => {
         <h2 className='text-4xl font-sans font-bold text-gray-800 text-center my-4'>
           Create New Account
         </h2>
+        {message && <Alert message={message} />}
         <div className='flex justify-center mt-5'>
           <div className='w-full max-w-lg'>
             <form
