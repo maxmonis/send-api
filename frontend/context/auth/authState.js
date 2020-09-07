@@ -5,18 +5,29 @@ import client from '../../config/axios';
 
 const AuthState = ({ children }) => {
   const initialState = {
-    token: null,
+    token: typeof window !== 'undefined' ? localStorage.getItem('token') : null,
     authenticated: null,
     user: null,
     message: null,
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
-  const registerUser = async (data) => {
+  const registerUser = async (values) => {
     try {
-      const res = await client.post('/api/users', data);
-      dispatch({ type: 'REGISTER_USER', payload: res.data.msg });
+      const { data } = await client.post('/api/users', values);
+      dispatch({ type: 'REGISTER_USER', payload: data.msg });
     } catch (error) {
       dispatch({ type: 'REGISTER_FAIL', payload: error.response.data.msg });
+    }
+    setTimeout(() => {
+      dispatch({ type: 'CLEAR_ALERTS' });
+    }, 3000);
+  };
+  const logUserIn = async (values) => {
+    try {
+      const { data } = await client.post('/api/auth', values);
+      dispatch({ type: 'LOGIN_USER', payload: data });
+    } catch (error) {
+      dispatch({ type: 'LOGIN_FAIL', payload: error.response.data.msg });
     }
     setTimeout(() => {
       dispatch({ type: 'CLEAR_ALERTS' });
@@ -31,6 +42,7 @@ const AuthState = ({ children }) => {
         user,
         message,
         registerUser,
+        logUserIn,
       }}
     >
       {children}
