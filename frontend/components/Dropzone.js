@@ -3,7 +3,7 @@ import { useDropzone } from 'react-dropzone';
 import appContext from '../context/app/appContext';
 
 const Dropzone = () => {
-  const { showAlert, uploadFile } = useContext(appContext);
+  const { showAlert, uploadFile, loading } = useContext(appContext);
   const onDropAccepted = useCallback(async (acceptedFiles) => {
     const file = acceptedFiles[0];
     const formData = new FormData();
@@ -45,12 +45,16 @@ const Dropzone = () => {
         <div className='mt-10 w-full'>
           <h4 className='text-2xl font-bold text-center mb-4'>Files</h4>
           <ul>{files}</ul>
-          <button
-            className='bg-blue-700 w-full py-3 rounded-lg text-white my-10 hover:bg-blue-800'
-            type='button'
-          >
-            Create Link
-          </button>
+          {loading ? (
+            <p className='my-10 text-center text-gray-600'>Uploading file...</p>
+          ) : (
+            <button
+              className='bg-blue-700 w-full py-3 rounded-lg text-white my-10 hover:bg-blue-800'
+              type='button'
+            >
+              Create Link
+            </button>
+          )}
         </div>
       ) : (
         <div {...getRootProps({ className: 'dropzone w-full py-32' })}>

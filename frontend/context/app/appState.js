@@ -4,7 +4,12 @@ import appReducer from './appReducer';
 import client from '../../config/axios';
 
 const AppState = ({ children }) => {
-  const initialState = { message: null, original_name: '', name: '' };
+  const initialState = {
+    message: null,
+    original_name: '',
+    name: '',
+    loading: false,
+  };
   const [state, dispatch] = useReducer(appReducer, initialState);
   const showAlert = (message) => {
     dispatch({ type: 'SHOW_ALERT', payload: message });
@@ -13,6 +18,7 @@ const AppState = ({ children }) => {
     dispatch({ type: 'HIDE_ALERT' });
   }, 3000);
   const uploadFile = async (formData, fileName) => {
+    dispatch({ type: 'BEGIN_UPLOAD' });
     try {
       const { data } = await client.post('/api/files', formData);
       dispatch({
@@ -26,10 +32,10 @@ const AppState = ({ children }) => {
       dispatch({ type: 'HIDE_ALERT' });
     }, 3000);
   };
-  const { message, original_name, name } = state;
+  const { message, original_name, name, loading } = state;
   return (
     <appContext.Provider
-      value={{ message, original_name, name, showAlert, uploadFile }}
+      value={{ message, original_name, name, loading, showAlert, uploadFile }}
     >
       {children}
     </appContext.Provider>
