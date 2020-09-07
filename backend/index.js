@@ -5,7 +5,11 @@ const cors = require('cors');
 const app = express();
 
 connectDB();
-app.use(cors());
+
+const config = {
+  origin: process.env.FRONTEND_URL,
+};
+app.use(cors(config));
 
 const PORT = process.env.PORT || 4000;
 
