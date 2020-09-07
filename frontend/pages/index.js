@@ -1,17 +1,21 @@
 import React, { useContext, useEffect } from 'react';
 import Link from 'next/link';
+import Alert from '../components/Alert';
 import Layout from '../components/Layout';
 import Dropzone from '../components/Dropzone';
 import authContext from '../context/auth/authContext';
+import appContext from '../context/app/appContext';
 
 const Index = () => {
   const { loadUser } = useContext(authContext);
+  const { message } = useContext(appContext);
   useEffect(() => {
     loadUser();
   }, []);
   return (
     <Layout>
       <div className='md:w-4/5 xl:w-3/5 mx-auto mb-32'>
+        {message && <Alert message={message} />}
         <div className='lg:flex md:shadow-lg p-5 bg-white rounded-lg py-10'>
           <Dropzone />
           <div className='md:flex-1 mb-3 mx-2 mt-16 lg:mt-0'>

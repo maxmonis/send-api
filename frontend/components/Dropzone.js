@@ -1,21 +1,29 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { useDropzone } from 'react-dropzone';
-import client from '../config/axios';
+import appContext from '../context/app/appContext';
 
 const Dropzone = () => {
-  const onDrop = useCallback(async (acceptedFiles) => {
+  const { showAlert, uploadFile } = useContext(appContext);
+  const onDropAccepted = useCallback(async (acceptedFiles) => {
+    const file = acceptedFiles[0];
     const formData = new FormData();
-    formData.append('file', acceptedFiles[0]);
-    const { data } = await client.post('/api/files', formData);
-    console.log(data);
+    formData.append('file', file);
+    uploadFile(formData, file.path);
   });
+  const onDropRejected = () => {
+    showAlert(
+      'File rejected, create a free account to allow uploads larger than 1MB'
+    );
+  };
   const {
     getRootProps,
     getInputProps,
     isDragActive,
     acceptedFiles,
   } = useDropzone({
-    onDrop,
+    onDropAccepted,
+    onDropRejected,
+    maxSize: 1000000,
   });
   const files = acceptedFiles.map((file) => {
     const { lastModified, path, size } = file;
