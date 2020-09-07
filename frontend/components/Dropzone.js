@@ -3,7 +3,7 @@ import { useDropzone } from 'react-dropzone';
 import appContext from '../context/app/appContext';
 
 const Dropzone = () => {
-  const { showAlert, uploadFile, loading } = useContext(appContext);
+  const { showAlert, uploadFile, createLink, loading } = useContext(appContext);
   const onDropAccepted = useCallback(async (acceptedFiles) => {
     const file = acceptedFiles[0];
     const formData = new FormData();
@@ -51,6 +51,7 @@ const Dropzone = () => {
             <button
               className='bg-blue-700 w-full py-3 rounded-lg text-white my-10 hover:bg-blue-800'
               type='button'
+              onClick={createLink}
             >
               Create Link
             </button>

@@ -11,6 +11,11 @@ const AppReducer = (state, action) => {
         name,
         loading: false,
       };
+    case 'LINK_CREATED':
+      return {
+        ...state,
+        url: payload,
+      };
     case 'SHOW_ALERT':
     case 'UPLOAD_FAIL':
       return {

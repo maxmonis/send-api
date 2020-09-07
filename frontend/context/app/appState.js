@@ -9,8 +9,22 @@ const AppState = ({ children }) => {
     original_name: '',
     name: '',
     loading: false,
+    downloads: 1,
+    password: '',
+    author: null,
+    url: '',
   };
   const [state, dispatch] = useReducer(appReducer, initialState);
+  const {
+    message,
+    original_name,
+    name,
+    loading,
+    downloads,
+    password,
+    author,
+    url,
+  } = state;
   const showAlert = (message) => {
     dispatch({ type: 'SHOW_ALERT', payload: message });
   };
@@ -32,10 +46,36 @@ const AppState = ({ children }) => {
       dispatch({ type: 'HIDE_ALERT' });
     }, 3000);
   };
-  const { message, original_name, name, loading } = state;
+  const createLink = async () => {
+    const values = {
+      name,
+      original_name,
+      downloads,
+      password,
+      author,
+    };
+    try {
+      const { data } = await client.post('/api/links', values);
+      dispatch({ type: 'LINK_CREATED', payload: data.msg });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <appContext.Provider
-      value={{ message, original_name, name, loading, showAlert, uploadFile }}
+      value={{
+        message,
+        original_name,
+        name,
+        loading,
+        downloads,
+        password,
+        author,
+        url,
+        showAlert,
+        uploadFile,
+        createLink,
+      }}
     >
       {children}
     </appContext.Provider>
