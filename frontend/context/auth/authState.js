@@ -40,11 +40,14 @@ const AuthState = ({ children }) => {
       Token(token);
     }
     try {
-      const { data } = await client.get('api/auth');
+      const { data } = await client.get('/api/auth');
       dispatch({ type: 'USER_LOADED', payload: data.user });
     } catch (error) {
-      console.log(error);
+      dispatch({ type: 'LOGIN_FAIL', payload: error.response.data.msg });
     }
+  };
+  const logOut = () => {
+    dispatch({ type: 'LOG_OUT' });
   };
   const { token, authenticated, user, message } = state;
   return (
@@ -57,6 +60,7 @@ const AuthState = ({ children }) => {
         registerUser,
         logUserIn,
         loadUser,
+        logOut,
       }}
     >
       {children}
