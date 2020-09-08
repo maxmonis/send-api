@@ -35,7 +35,7 @@ exports.newLink = async (req, res) => {
 exports.allLinks = async (req, res) => {
   try {
     const links = await Link.find({}).select('url -_id');
-    res.json(links);
+    res.json({ links });
   } catch (error) {
     console.log(error);
   }
