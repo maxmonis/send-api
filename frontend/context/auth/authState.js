@@ -7,7 +7,6 @@ import Token from '../../config/token';
 const AuthState = ({ children }) => {
   const initialState = {
     token: typeof window !== 'undefined' ? localStorage.getItem('token') : null,
-    authenticated: null,
     user: null,
     message: null,
   };
@@ -41,7 +40,9 @@ const AuthState = ({ children }) => {
     }
     try {
       const { data } = await client.get('/api/auth');
-      dispatch({ type: 'USER_LOADED', payload: data.user });
+      if (data.user) {
+        dispatch({ type: 'USER_LOADED', payload: data.user });
+      }
     } catch (error) {
       dispatch({ type: 'LOGIN_FAIL', payload: error.response.data.msg });
     }
@@ -49,12 +50,11 @@ const AuthState = ({ children }) => {
   const logOut = () => {
     dispatch({ type: 'LOG_OUT' });
   };
-  const { token, authenticated, user, message } = state;
+  const { token, user, message } = state;
   return (
     <authContext.Provider
       value={{
         token,
-        authenticated,
         user,
         message,
         registerUser,

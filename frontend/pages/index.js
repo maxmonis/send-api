@@ -10,7 +10,8 @@ const Index = () => {
   const { loadUser } = useContext(authContext);
   const { message, url } = useContext(appContext);
   useEffect(() => {
-    loadUser();
+    const token = localStorage.getItem('token');
+    if (token) loadUser();
   }, []);
   const URL_LINK = `${process.env.frontendURL}/links/${url}`;
   const copyLink = () => navigator.clipboard.writeText(URL_LINK);
