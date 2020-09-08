@@ -28,6 +28,10 @@ const AppReducer = (state, action) => {
         ...state,
         message: null,
       };
+    case 'RESET_STATE':
+      return {
+        ...payload,
+      };
     default:
       return state;
   }

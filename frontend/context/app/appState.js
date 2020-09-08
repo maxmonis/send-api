@@ -61,6 +61,9 @@ const AppState = ({ children }) => {
       console.log(error);
     }
   };
+  const resetState = () => {
+    dispatch({ type: 'RESET_STATE', payload: initialState });
+  };
   return (
     <appContext.Provider
       value={{
@@ -75,6 +78,7 @@ const AppState = ({ children }) => {
         showAlert,
         uploadFile,
         createLink,
+        resetState,
       }}
     >
       {children}
