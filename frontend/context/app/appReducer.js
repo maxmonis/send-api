@@ -32,6 +32,10 @@ const AppReducer = (state, action) => {
       return {
         ...payload,
       };
+    case 'ADD_PASSWORD':
+      return { ...state, password: payload };
+    case 'SET_DOWNLOADS':
+      return { ...state, downloads: payload };
     default:
       return state;
   }

@@ -64,6 +64,12 @@ const AppState = ({ children }) => {
   const resetState = () => {
     dispatch({ type: 'RESET_STATE', payload: initialState });
   };
+  const addPassword = (password) => {
+    dispatch({ type: 'ADD_PASSWORD', payload: password });
+  };
+  const setDownloads = (limit) => {
+    dispatch({ type: 'SET_DOWNLOADS', payload: limit });
+  };
   return (
     <appContext.Provider
       value={{
@@ -79,6 +85,8 @@ const AppState = ({ children }) => {
         uploadFile,
         createLink,
         resetState,
+        addPassword,
+        setDownloads,
       }}
     >
       {children}
