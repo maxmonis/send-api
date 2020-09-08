@@ -38,3 +38,8 @@ exports.removeFile = async (req, res) => {
     console.log(error);
   }
 };
+
+exports.download = (req, res) => {
+  const file = __dirname + '/../uploads/' + req.params.file;
+  res.download(file);
+};

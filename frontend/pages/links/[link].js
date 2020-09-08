@@ -29,7 +29,8 @@ const Link = ({ link }) => {
       <div className='flex items-center justify-center mt-10'>
         <a
           className='bg-red-500 text-center px-10 py-3 rounded uppercase font-bold text-white cursor-pointer'
-          href={`${process.env.backendURL}/uploads/${link.file}`}
+          href={`${process.env.backendURL}/api/files/${link.file}`}
+          download
         >
           Here
         </a>
