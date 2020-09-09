@@ -41,11 +41,24 @@ exports.allLinks = async (req, res) => {
   }
 };
 
+exports.hasPassword = async (req, res, next) => {
+  const { url } = req.params;
+  const link = await Link.findOne({ url });
+  if (!link) {
+    res.status(404).json({ msg: 'Link not found' });
+    return next();
+  }
+  if (link.password) {
+    return res.json({ password: true, link: link.url });
+  }
+  next();
+};
+
 exports.getLink = async (req, res, next) => {
   const { url } = req.params;
   const link = await Link.findOne({ url });
   if (!link) {
-    res.status(400).json({ msg: 'Link not found' });
+    res.status(404).json({ msg: 'Link not found' });
     return next();
   }
   res.json({ file: link.name });

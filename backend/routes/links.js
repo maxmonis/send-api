@@ -1,7 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
-const { newLink, getLink, allLinks } = require('../controllers/linkController');
+const {
+  newLink,
+  getLink,
+  allLinks,
+  hasPassword,
+} = require('../controllers/linkController');
 const { check } = require('express-validator');
 
 router.post(
@@ -16,6 +21,6 @@ router.post(
 
 router.get('/', allLinks);
 
-router.get('/:url', getLink);
+router.get('/:url', hasPassword, getLink);
 
 module.exports = router;
