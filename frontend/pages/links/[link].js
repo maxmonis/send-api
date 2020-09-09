@@ -1,5 +1,8 @@
 import Layout from '../../components/Layout';
 import client from '../../config/axios';
+import { useState, useContext } from 'react';
+import appContext from '../../context/app/appContext';
+import Alert from '../../components/Alert';
 
 export async function getServerSideProps({ params }) {
   const { link } = params;
@@ -21,14 +24,24 @@ export async function getServerSidePaths() {
 }
 
 const Link = ({ link }) => {
-  const verifyPassword = (e) => {
+  const [password, setPassword] = useState('');
+  const { message, showAlert } = useContext(appContext);
+  const verifyPassword = async (e) => {
     e.preventDefault();
-    console.log('verifyPassword');
+    try {
+      const { data } = await client.post(`/api/links/${link.link}`, {
+        password,
+      });
+      showAlert(data.msg);
+    } catch (error) {
+      showAlert(error.response.data.msg);
+    }
   };
   return (
     <Layout>
       {link.password ? (
         <>
+          {message && <Alert message={message} />}
           <p className='text-center'>Password required to download this link</p>
           <div className='flex justify-center mt-5'>
             <div className='w-full max-w-lg'>
@@ -48,6 +61,8 @@ const Link = ({ link }) => {
                     type='text'
                     id='password'
                     placeholder='Enter password'
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   ></input>
                 </div>
                 <input

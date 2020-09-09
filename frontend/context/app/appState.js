@@ -27,10 +27,10 @@ const AppState = ({ children }) => {
   } = state;
   const showAlert = (message) => {
     dispatch({ type: 'SHOW_ALERT', payload: message });
+    setTimeout(() => {
+      dispatch({ type: 'HIDE_ALERT' });
+    }, 3000);
   };
-  setTimeout(() => {
-    dispatch({ type: 'HIDE_ALERT' });
-  }, 3000);
   const uploadFile = async (formData, fileName) => {
     dispatch({ type: 'BEGIN_UPLOAD' });
     try {
