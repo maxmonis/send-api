@@ -9,8 +9,10 @@ const AuthState = ({ children }) => {
     token: typeof window !== 'undefined' ? localStorage.getItem('token') : null,
     user: null,
     message: null,
+    authenticated: false,
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
+  const { token, user, message, authenticated } = state;
   const registerUser = async (values) => {
     try {
       const { data } = await client.post('/api/users', values);
@@ -50,13 +52,13 @@ const AuthState = ({ children }) => {
   const logOut = () => {
     dispatch({ type: 'LOG_OUT' });
   };
-  const { token, user, message } = state;
   return (
     <authContext.Provider
       value={{
         token,
         user,
         message,
+        authenticated,
         registerUser,
         logUserIn,
         loadUser,
