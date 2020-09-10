@@ -7,7 +7,7 @@ import authContext from '../context/auth/authContext';
 import appContext from '../context/app/appContext';
 
 const Index = () => {
-  const { loadUser } = useContext(authContext);
+  const { loadUser, user } = useContext(authContext);
   const { message, url } = useContext(appContext);
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -49,11 +49,13 @@ const Index = () => {
                   following download. This ensures that your data won't be
                   floating around online in perpetuity.
                 </p>
-                <Link href='create-account'>
-                  <a className='text-red-500 font-bold text-lg hover:text-red-700'>
-                    Create Account To Access Additional Features
-                  </a>
-                </Link>
+                {!user && (
+                  <Link href='create-account'>
+                    <a className='text-red-500 font-bold text-lg hover:text-red-700'>
+                      Create Account To Access Additional Features
+                    </a>
+                  </Link>
+                )}
               </div>
             </div>
           </>
