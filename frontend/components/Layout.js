@@ -1,12 +1,13 @@
 import React from 'react';
 import Head from 'next/head';
 import Header from './Header';
+import Footer from './Footer';
 
 const Layout = ({ children }) => {
   return (
     <>
       <Head>
-        <title>Next Send</title>
+        <title>React Send</title>
         <link
           href='https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css'
           rel='stylesheet'
@@ -16,6 +17,7 @@ const Layout = ({ children }) => {
         <div className='container mx-auto'>
           <Header />
           <main className='mt-20'>{children}</main>
+          <Footer />
         </div>
       </div>
     </>

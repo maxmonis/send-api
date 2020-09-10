@@ -91,6 +91,7 @@ const Link = ({ link }) => {
           </div>
         </>
       )}
+      <div style={{ height: '20rem' }} />
     </Layout>
   );
 };
