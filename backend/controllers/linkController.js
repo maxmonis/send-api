@@ -13,7 +13,6 @@ exports.newLink = async (req, res) => {
   link.url = generate();
   link.name = name;
   link.original_name = original_name;
-  link.password = password;
   if (req.user) {
     if (downloads) {
       link.downloads = downloads;
@@ -49,17 +48,17 @@ exports.hasPassword = async (req, res, next) => {
     return next();
   }
   if (link.password) {
-    return res.json({ password: true, link: link.url });
+    return res.json({ password: true, link: link.url, file: link.name });
   }
   next();
 };
 
 exports.verifyPassword = async (req, res, next) => {
   const { url } = req.params;
-  const link = await Link.findOne({ url });
   const { password } = req.body;
+  const link = await Link.findOne({ url });
   if (bcrypt.compareSync(password, link.password)) {
-    res.json({ msg: 'Correct password' });
+    next();
   } else {
     res.status(401).json({ msg: 'Incorrect password' });
   }
@@ -72,6 +71,5 @@ exports.getLink = async (req, res, next) => {
     res.status(404).json({ msg: 'Link not found' });
     return next();
   }
-  res.json({ file: link.name });
-  next();
+  res.json({ file: link.name, password: false });
 };

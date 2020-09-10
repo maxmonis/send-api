@@ -25,6 +25,7 @@ export async function getServerSidePaths() {
 
 const Link = ({ link }) => {
   const [password, setPassword] = useState('');
+  const [hasPassword, setHasPassword] = useState(link.password);
   const { message, showAlert } = useContext(appContext);
   const verifyPassword = async (e) => {
     e.preventDefault();
@@ -32,14 +33,14 @@ const Link = ({ link }) => {
       const { data } = await client.post(`/api/links/${link.link}`, {
         password,
       });
-      showAlert(data.msg);
+      setHasPassword(data.password);
     } catch (error) {
       showAlert(error.response.data.msg);
     }
   };
   return (
     <Layout>
-      {link.password ? (
+      {hasPassword ? (
         <>
           {message && <Alert message={message} />}
           <p className='text-center'>Password required to download this link</p>
