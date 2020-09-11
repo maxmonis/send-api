@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
+import Alert from '../components/Alert';
 import Layout from '../components/Layout';
+import authContext from '../context/auth/authContext';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import authContext from '../context/auth/authContext';
-import Alert from '../components/Alert';
 
 const CreateAccount = () => {
   const { registerUser, message } = useContext(authContext);

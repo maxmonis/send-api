@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import { useCallback, useContext } from 'react';
 import { useDropzone } from 'react-dropzone';
 import Form from './Form';
 import appContext from '../context/app/appContext';

@@ -1,5 +1,6 @@
 {
   "name": "react-send",
+  "description": "Clone of Firefox Send",
   "version": "0.1.0",
   "private": true,
   "scripts": {

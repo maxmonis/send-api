@@ -1,8 +1,8 @@
+import { useState, useContext } from 'react';
+import Alert from '../../components/Alert';
 import Layout from '../../components/Layout';
 import client from '../../config/axios';
-import { useState, useContext } from 'react';
 import appContext from '../../context/app/appContext';
-import Alert from '../../components/Alert';
 
 export async function getServerSideProps({ params }) {
   const { link } = params;

@@ -1,6 +1,6 @@
 const Link = require('../models/Link');
 const { generate } = require('shortid');
-const bcrypt = require('bcrypt');
+const { genSalt, hash, compareSync } = require('bcrypt');
 const { validationResult } = require('express-validator');
 
 exports.newLink = async (req, res) => {
@@ -18,8 +18,8 @@ exports.newLink = async (req, res) => {
       link.downloads = downloads;
     }
     if (password) {
-      const salt = await bcrypt.genSalt(10);
-      link.password = await bcrypt.hash(password, salt);
+      const salt = await genSalt(10);
+      link.password = await hash(password, salt);
     }
     link.author = req.user.id;
   }
@@ -57,7 +57,7 @@ exports.verifyPassword = async (req, res, next) => {
   const { url } = req.params;
   const { password } = req.body;
   const link = await Link.findOne({ url });
-  if (bcrypt.compareSync(password, link.password)) {
+  if (compareSync(password, link.password)) {
     next();
   } else {
     res.status(401).json({ msg: 'Incorrect password' });

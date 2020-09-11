@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import Layout from '../components/Layout';
 import Alert from '../components/Alert';
 import authContext from '../context/auth/authContext';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 const Login = () => {
   const { logUserIn, message, authenticated } = useContext(authContext);

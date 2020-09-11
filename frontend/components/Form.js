@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import appContext from '../context/app/appContext';
 
 const Form = () => {
