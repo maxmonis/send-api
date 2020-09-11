@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import Link from 'next/link';
 import Alert from '../components/Alert';
 import Layout from '../components/Layout';
@@ -7,10 +7,11 @@ import authContext from '../context/auth/authContext';
 import appContext from '../context/app/appContext';
 
 const Index = () => {
-  const { loadUser } = useContext(authContext);
+  const { loadUser, user } = useContext(authContext);
   const { message, url } = useContext(appContext);
   useEffect(() => {
-    loadUser();
+    const token = localStorage.getItem('token');
+    if (token) loadUser();
   }, []);
   const URL_LINK = `${process.env.frontendURL}/links/${url}`;
   const copyLink = () => navigator.clipboard.writeText(URL_LINK);
@@ -32,6 +33,7 @@ const Index = () => {
             >
               Copy URL
             </button>
+            <div style={{ height: '15rem' }} />
           </>
         ) : (
           <>
@@ -46,13 +48,18 @@ const Index = () => {
                   <span className='text-red-500 font-bold'>React Send</span>{' '}
                   allows you to privately share files which will be deleted
                   following download. This ensures that your data won't be
-                  floating around online in perpetuity.
+                  floating around online in perpetuity. As a user, we allow
+                  uploads of larger files and you have the option to protect
+                  links with passwords and set a limit of up to 20 downloads
+                  before deletion.
                 </p>
-                <Link href='create-account'>
-                  <a className='text-red-500 font-bold text-lg hover:text-red-700'>
-                    Create Account To Access Additional Features
-                  </a>
-                </Link>
+                {!user && (
+                  <Link href='create-account'>
+                    <a className='text-red-500 font-bold text-lg hover:text-red-700'>
+                      Create Account To Access Additional Features
+                    </a>
+                  </Link>
+                )}
               </div>
             </div>
           </>

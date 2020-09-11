@@ -1,5 +1,6 @@
+const Link = require('../models/Link');
 const multer = require('multer');
-const shortid = require('shortid');
+const { generate } = require('shortid');
 const { unlinkSync } = require('fs');
 
 exports.addFile = async (req, res, next) => {
@@ -16,7 +17,7 @@ exports.addFile = async (req, res, next) => {
           originalname.lastIndexOf('.'),
           originalname.length
         );
-        cb(null, `${shortid.generate()}${extension}`);
+        cb(null, `${generate()}${extension}`);
       },
     })),
   };
@@ -33,8 +34,23 @@ exports.addFile = async (req, res, next) => {
 
 exports.removeFile = async (req, res) => {
   try {
-    unlinkSync(__dirname + `/../uploads/${req.file}`);
+    unlinkSync(`${__dirname}/../uploads/${req.file}`);
   } catch (error) {
     console.log(error);
+  }
+};
+
+exports.download = async (req, res, next) => {
+  const { file } = req.params;
+  const link = await Link.findOne({ name: file });
+  res.download(`${__dirname}/../uploads/${file}`);
+  const { name, downloads, id } = link;
+  if (downloads > 1) {
+    link.downloads--;
+    await link.save();
+  } else {
+    req.file = name;
+    await Link.findOneAndRemove(id);
+    next();
   }
 };

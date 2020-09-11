@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import Layout from '../components/Layout';
 import Alert from '../components/Alert';
 import authContext from '../context/auth/authContext';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 const Login = () => {
   const { logUserIn, message, authenticated } = useContext(authContext);
@@ -80,7 +80,7 @@ const Login = () => {
                 </label>
                 <input
                   className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                  type='text'
+                  type='password'
                   id='password'
                   placeholder='Password'
                   value={password}

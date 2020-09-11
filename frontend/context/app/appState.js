@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import { useReducer } from 'react';
 import appContext from './appContext';
 import appReducer from './appReducer';
 import client from '../../config/axios';
@@ -27,14 +27,14 @@ const AppState = ({ children }) => {
   } = state;
   const showAlert = (message) => {
     dispatch({ type: 'SHOW_ALERT', payload: message });
+    setTimeout(() => {
+      dispatch({ type: 'HIDE_ALERT' });
+    }, 3000);
   };
-  setTimeout(() => {
-    dispatch({ type: 'HIDE_ALERT' });
-  }, 3000);
   const uploadFile = async (formData, fileName) => {
     dispatch({ type: 'BEGIN_UPLOAD' });
     try {
-      const { data } = await client.post('/api/files', formData);
+      const { data } = await client.post('/files', formData);
       dispatch({
         type: 'UPLOAD_SUCCESS',
         payload: { name: data.file, original_name: fileName },
@@ -55,11 +55,20 @@ const AppState = ({ children }) => {
       author,
     };
     try {
-      const { data } = await client.post('/api/links', values);
+      const { data } = await client.post('/links', values);
       dispatch({ type: 'LINK_CREATED', payload: data.msg });
     } catch (error) {
       console.log(error);
     }
+  };
+  const resetState = () => {
+    dispatch({ type: 'RESET_STATE', payload: initialState });
+  };
+  const addPassword = (password) => {
+    dispatch({ type: 'ADD_PASSWORD', payload: password });
+  };
+  const setDownloads = (limit) => {
+    dispatch({ type: 'SET_DOWNLOADS', payload: limit });
   };
   return (
     <appContext.Provider
@@ -75,6 +84,9 @@ const AppState = ({ children }) => {
         showAlert,
         uploadFile,
         createLink,
+        resetState,
+        addPassword,
+        setDownloads,
       }}
     >
       {children}

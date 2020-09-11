@@ -17,10 +17,10 @@ const AuthReducer = (state, action) => {
       };
     }
     case 'USER_LOADED':
-      return { ...state, user: payload };
+      return { ...state, user: payload, authenticated: true };
     case 'LOG_OUT': {
       localStorage.removeItem('token');
-      return { ...state, user: null, token: null, authenticated: null };
+      return { ...state, user: null, token: null, authenticated: false };
     }
     case 'CLEAR_ALERTS':
       return {

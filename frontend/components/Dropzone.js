@@ -1,9 +1,12 @@
-import React, { useCallback, useContext } from 'react';
+import { useCallback, useContext } from 'react';
 import { useDropzone } from 'react-dropzone';
+import Form from './Form';
 import appContext from '../context/app/appContext';
+import authContext from '../context/auth/authContext';
 
 const Dropzone = () => {
   const { showAlert, uploadFile, createLink, loading } = useContext(appContext);
+  const { user } = useContext(authContext);
   const onDropAccepted = useCallback(async (acceptedFiles) => {
     const file = acceptedFiles[0];
     const formData = new FormData();
@@ -45,6 +48,7 @@ const Dropzone = () => {
         <div className='mt-10 w-full'>
           <h4 className='text-2xl font-bold text-center mb-4'>Files</h4>
           <ul>{files}</ul>
+          {user && <Form />}
           {loading ? (
             <p className='my-10 text-center text-gray-600'>Uploading file...</p>
           ) : (

@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const bcrypt = require('bcrypt');
+const { genSalt, hash } = require('bcrypt');
 const { validationResult } = require('express-validator');
 
 exports.newUser = async (req, res) => {
@@ -13,8 +13,8 @@ exports.newUser = async (req, res) => {
     return res.status(400).json({ msg: 'Email must be unique' });
   }
   user = new User(req.body);
-  const salt = await bcrypt.genSalt(10);
-  user.password = await bcrypt.hash(password, salt);
+  const salt = await genSalt(10);
+  user.password = await hash(password, salt);
   try {
     user.save();
     res.json({ msg: `${name} added to users` });

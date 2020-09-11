@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const { sign } = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 require('dotenv').config({ path: 'variables.env' });
 
@@ -16,7 +16,7 @@ exports.userAuthentication = async (req, res, next) => {
     return next();
   }
   if (bcrypt.compareSync(password, user.password)) {
-    const token = jwt.sign(
+    const token = sign(
       {
         id: user._id,
         name: user.name,

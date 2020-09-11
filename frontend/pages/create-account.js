@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
+import Alert from '../components/Alert';
 import Layout from '../components/Layout';
+import authContext from '../context/auth/authContext';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import authContext from '../context/auth/authContext';
-import Alert from '../components/Alert';
 
 const CreateAccount = () => {
   const { registerUser, message } = useContext(authContext);
@@ -101,7 +101,7 @@ const CreateAccount = () => {
                 </label>
                 <input
                   className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                  type='text'
+                  type='password'
                   id='password'
                   placeholder='Password'
                   value={password}

@@ -1,7 +1,7 @@
 {
   "name": "send-server",
   "version": "1.0.0",
-  "description": "Clone of Firefox Send",
+  "description": "API of Firefox Send Clone",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./index.js",
