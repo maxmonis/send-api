@@ -15,7 +15,7 @@ const AuthState = ({ children }) => {
   const { token, user, message, authenticated } = state;
   const registerUser = async (values) => {
     try {
-      const { data } = await client.post('/api/users', values);
+      const { data } = await client.post('/users', values);
       dispatch({ type: 'REGISTER_USER', payload: data.msg });
     } catch (error) {
       dispatch({ type: 'REGISTER_FAIL', payload: error.response.data.msg });
@@ -26,7 +26,7 @@ const AuthState = ({ children }) => {
   };
   const logUserIn = async (values) => {
     try {
-      const { data } = await client.post('/api/auth', values);
+      const { data } = await client.post('/auth', values);
       dispatch({ type: 'LOGIN_USER', payload: data });
     } catch (error) {
       dispatch({ type: 'LOGIN_FAIL', payload: error.response.data.msg });
@@ -41,7 +41,7 @@ const AuthState = ({ children }) => {
       Token(token);
     }
     try {
-      const { data } = await client.get('/api/auth');
+      const { data } = await client.get('/auth');
       if (data.user) {
         dispatch({ type: 'USER_LOADED', payload: data.user });
       }

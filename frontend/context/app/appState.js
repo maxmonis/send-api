@@ -34,7 +34,7 @@ const AppState = ({ children }) => {
   const uploadFile = async (formData, fileName) => {
     dispatch({ type: 'BEGIN_UPLOAD' });
     try {
-      const { data } = await client.post('/api/files', formData);
+      const { data } = await client.post('/files', formData);
       dispatch({
         type: 'UPLOAD_SUCCESS',
         payload: { name: data.file, original_name: fileName },
@@ -55,7 +55,7 @@ const AppState = ({ children }) => {
       author,
     };
     try {
-      const { data } = await client.post('/api/links', values);
+      const { data } = await client.post('/links', values);
       dispatch({ type: 'LINK_CREATED', payload: data.msg });
     } catch (error) {
       console.log(error);

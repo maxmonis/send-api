@@ -6,7 +6,7 @@ import Alert from '../../components/Alert';
 
 export async function getServerSideProps({ params }) {
   const { link } = params;
-  const { data } = await client.get(`/api/links/${link}`);
+  const { data } = await client.get(`/links/${link}`);
   return {
     props: {
       link: data,
@@ -14,7 +14,7 @@ export async function getServerSideProps({ params }) {
   };
 }
 export async function getServerSidePaths() {
-  const { data } = await client.get('/api/links');
+  const { data } = await client.get('/links');
   return {
     paths: data.links.map((link) => ({
       params: { link: link.url },
@@ -30,7 +30,7 @@ const Link = ({ link }) => {
   const verifyPassword = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await client.post(`/api/links/${link.link}`, {
+      const { data } = await client.post(`/links/${link.link}`, {
         password,
       });
       setHasPassword(data.password);
@@ -83,7 +83,7 @@ const Link = ({ link }) => {
           <div className='flex items-center justify-center mt-10'>
             <a
               className='bg-red-500 text-center px-10 py-3 rounded uppercase font-bold text-white cursor-pointer'
-              href={`${process.env.backendURL}/api/files/${link.file}`}
+              href={`${process.env.backendURL}/files/${link.file}`}
               download
             >
               Here
