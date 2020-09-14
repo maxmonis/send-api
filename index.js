@@ -6,7 +6,10 @@ const app = express();
 
 connectDB();
 
-app.use(cors());
+const config = {
+  origin: '*',
+};
+app.use(cors(config));
 
 const PORT = process.env.PORT || 4000;
 
