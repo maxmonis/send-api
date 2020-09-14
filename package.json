@@ -1,5 +1,5 @@
 {
-  "name": "send-server",
+  "name": "send-api",
   "version": "1.0.0",
   "description": "API of Firefox Send Clone",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "start": "node ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": "https://github.com/maxmonis/sendClone",
+  "repository": "https://github.com/maxmonis/send-api",
   "author": "Max Monis <mmonis77@gmail.com>",
   "license": "MIT",
   "dependencies": {
