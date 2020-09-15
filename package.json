@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "API of Firefox Send Clone",
   "main": "index.js",
+  "engines": {
+    "node": "12.x",
+    "yarn": "1.x"
+  },
   "scripts": {
     "dev": "nodemon ./index.js",
     "start": "node ./index.js",
