@@ -6,11 +6,7 @@ const app = express();
 
 connectDB();
 
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL,
-  })
-);
+app.use(cors());
 
 const PORT = process.env.PORT || 4000;
 
